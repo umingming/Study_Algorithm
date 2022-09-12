@@ -9,12 +9,18 @@ public class ContainerWithMostWater {
         for (int i=0; i<temp.length; ++i) {
             for (int j=0; j<temp.length; ++j) {
 
-                if (ContainerSize == 0 && i!=0 && temp[0] <= temp[i]) {
-                    if (j>i) {
-                        
+                if (i>j && i!=j) {
+
+                    if (ContainerSize < temp[j] * j && temp[i] > temp[j]) {
+                        ContainerSize = temp[j] * j;
+                    } else if (ContainerSize < temp[i] * j) {
+                        ContainerSize = temp[i] * j;
                     }
+
                 }
             }
         }
+
+        System.out.println(ContainerSize);
     }
 }
