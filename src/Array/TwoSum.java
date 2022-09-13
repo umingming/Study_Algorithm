@@ -1,8 +1,17 @@
 package Array;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+/*
+    [문제: TwoSum]
+    Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+    You may assume that each input would have exactly one solution, and you may not use the same element twice.
+    You can return the answer in any order.
 
+    Example 1:
+
+    Input: nums = [2,7,11,15], target = 9
+    Output: [0,1]
+    Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+*/
 
 /*
     [설계]
@@ -12,27 +21,22 @@ import java.io.InputStreamReader;
     4. 2중 for문을 돌면서 배열 내 2가지 정수의 값이 3번의 input값과 동일한지 판별한다.
 */
 public class TwoSum {
-    public static void main(String[] args) throws Exception{
 
-        int[] temp = {1, 3, 5, 2, 1};
+    public int[] twoSum(int[] temp, int target) {
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-
-        System.out.print("Please Input Value: ");
-        int inputNumber = Integer.parseInt(reader.readLine());
-        String result = "";
-
+        int answer[] = new int[2];
         for(int i=0; i<temp.length; ++i) {
             for (int j=0; j<temp.length; ++j) {
-                if(temp[i] + temp[j] == inputNumber && i!=j) {
-                    result = "[" + i + "," + j + "]";
-                    System.out.println(result);
-
-                    return;
+                if(temp[i] + temp[j] == target && i!=j) {
+                    answer[0] = i;
+                    answer[1] = j;
+                    break;
                 }
             }
         }
 
+        return answer;
     }
+
+
 }
