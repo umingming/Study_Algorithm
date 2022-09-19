@@ -1,4 +1,4 @@
-package Array;
+package array;
 
 /*
     [문제: TwoSum]

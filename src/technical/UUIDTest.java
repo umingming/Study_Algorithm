@@ -1,4 +1,4 @@
-package Array;
+package technical;
 
 import java.util.UUID;
 

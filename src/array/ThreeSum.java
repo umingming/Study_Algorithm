@@ -9,7 +9,7 @@
     1. nums의 갯수가 3미만일 경우 0을 리턴해준다.
 */
 
-package Array;
+package array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
