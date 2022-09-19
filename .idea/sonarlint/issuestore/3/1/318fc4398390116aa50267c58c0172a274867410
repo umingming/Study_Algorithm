@@ -1,0 +1,16 @@
+
+y
+java:S1488"^Immediately return this expression instead of assigning it to the temporary variable "result".(šâ¶åşÿÿÿÿ
+€
+java:S1488 "^Immediately return this expression instead of assigning it to the temporary variable "result".(šâ¶åşÿÿÿÿ8ÿªÖª´0
+T	java:S106
+"9Replace this use of System.out or System.err by a logger.(ËÃÚ18âÖÕª´0
+]	java:S125	"<This block of commented-out lines of code should be removed.(õËŠ²úÿÿÿÿ8™Ìàª´0
+T
+java:S1854"9Remove this useless assignment to local variable "temp1".(¢•şäøÿÿÿÿ
+E
+java:S1481"*Remove this unused "temp1" local variable.(¢•şäøÿÿÿÿ
+[
+java:S1854"9Remove this useless assignment to local variable "temp2".(Ç€œëùÿÿÿÿ8ÎûÊª´0
+L
+java:S1481"*Remove this unused "temp2" local variable.(Ç€œëùÿÿÿÿ8ĞûÊª´0
