@@ -3,10 +3,13 @@ package array;
 public class ZiazagConversion {
 
     public static void main(String[] args) {
-        String answer = convert("abcdefg", 3);
+        String s = "abasfasfcdefg";
+        int numRows = 3;
+        String answer = convert(s, numRows);
         System.out.println(answer);
     }
 
+    //문자: abcdefg
 
     /* [2개]
         1   3   5   7   9
@@ -14,13 +17,18 @@ public class ZiazagConversion {
     */
 
     /* [3개]
-
-    abcdefg
-
         a       e
         b   d   f
         c       g
     */
+
+    /* [4개]
+        a           g
+        b       f
+        c   e
+        d
+    */
+
 
 
     public static String convert(String s, int numRows) {

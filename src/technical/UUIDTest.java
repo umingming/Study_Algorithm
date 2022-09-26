@@ -6,8 +6,10 @@ public class UUIDTest {
 
     public static void main(String[] args) {
 
-//        System.out.println(version1());
-        System.out.println(version2());
+
+        UUID uuid = UUID.fromString("3840002asdasdasd2020-8casdasdf0-11bd-b23e-10b96e4ef00d");
+
+        System.out.println(uuid);
 
     }
 
@@ -22,12 +24,15 @@ public class UUIDTest {
     }
 
     public static long version2() {
+        //UUID 형식인지를 체킹 하는 메소드
 
         long beforeTime = System.currentTimeMillis();
 
-        String temp2 = UUID.fromString("3051a8d7-aea7-1801-e0bf-bc539dd60cf3").toString();
+        UUID uuid = UUID.fromString("38400022020-8cf0-11bd-b23e-10b96e4ef00d");
 
+        System.out.println(uuid);
         long afterTime = System.currentTimeMillis();
+
 
         long result = afterTime - beforeTime;
 
