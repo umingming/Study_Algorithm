@@ -12,6 +12,8 @@ public class UUIDTest {
         String temp2 = UUID.fromString("3051a8d7-aea7-1801-e0bf-bc539dd60cf3").toString();
         System.out.println(temp2);
 
+        //C# RUID
+
     }
 
 }
