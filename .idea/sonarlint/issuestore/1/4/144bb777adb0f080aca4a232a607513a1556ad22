@@ -1,0 +1,12 @@
+
+p
+java:S1488#"ZImmediately return this expression instead of assigning it to the temporary variable "s2".(ß¹â’
+u
+java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ìä¬áıÿÿÿÿ
+O
+java:S4719#"9Replace charset name argument with StandardCharsets.UTF_8(ß¹â’
+Q
+java:S1128"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ8µ•üÊ¶0
+R
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8ôüÊ¶0
