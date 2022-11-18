@@ -1,4 +1,4 @@
-package array;
+package leetcode.array;
 
 /*
     int[] nums = [...]; // Input array
