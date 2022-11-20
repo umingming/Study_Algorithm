@@ -1,4 +1,4 @@
-package array;
+package leetcode.array;
 
 public class PlusOne {
 
@@ -42,10 +42,6 @@ public class PlusOne {
         }
 
         return result;
-
-
-
-
 
     }
 
