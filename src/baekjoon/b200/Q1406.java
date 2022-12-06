@@ -34,7 +34,7 @@ public class Q1406 {
         int count = Integer.parseInt(reader.readLine());
         int index = temp.length();
         String input;
-        String[] isSplitInput = new String[1];
+
 
         for (int i=0; i<count; ++i) {
             input = reader.readLine();
@@ -49,13 +49,13 @@ public class Q1406 {
                 }
 
             } else if (input.startsWith("P")) {
-                isSplitInput = input.split(" ");
-                temp = temp.substring(0, index-1) + isSplitInput[1] + temp.substring(index-1);
+                temp = temp.substring(0, index-1) + input.substring(input.indexOf(" ")+1) + temp.substring(index-1);
             }
 
         }
 
         System.out.print(temp);
+
 
 
     }
