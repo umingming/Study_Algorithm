@@ -11,19 +11,29 @@ import java.io.InputStreamReader;
  * 즉 길이가 L인 문자열이 현재 편집기에 입력되어 있으면, 커서가 위치할 수 있는 곳은 L+1가지 경우가 있다.
  * 이 편집기가 지원하는 명령어는 다음과 같다.
  *
- * [풀이]
+ * L  : 커서를 왼쪽으로 한 칸 옮김 (커서가 문장의 맨 앞이면 무시됨)
+ * D  : 커서를 오른쪽으로 한 칸 옮김 (커서가 문장의 맨 뒤이면 무시됨)
+ * B  : 커서 왼쪽에 있는 문자를 삭제함 (커서가 문장의 맨 앞이면 무시됨)
+ *      삭제로 인해 커서는 한 칸 왼쪽으로 이동한 것처럼 나타나지만, 실제로 커서의 오른쪽에 있던 문자는 그대로임
+ * P $: $라는 문자를 커서 왼쪽에 추가함
+ *
+ * [풀이 1]
  * 1. 버퍼 선언
  * 2. 문자 변수 temp를 버퍼로 입력 받는다.
  * 3. 숫자 변수 count 버퍼로 입력 받는다.
  * 4. 숫자 변수 index를 선언한다. 최초값은 temp.length이다.
- * 4. 숫자만큼 for문을 돌아준다.
+ * 5. 숫자만큼 for문을 돌아준다.
  *  > 값을 입력 받는다
  *      > L일 시
  *          > index = 1이 아니면 index = index-1
-*       > D 일 시
+ *      > D 일 시
  *          > index = temp.length가 아니면 index = index + 1;
-*       > temp.startWith가 P일 시
+ *      > temp.startWith가 P일 시
  *          > temp = temp.substring(0, index-1) + P + temp.substring(index-1);
+ *
+ * [시간 초과...]
+ * [풀이 2]
+ *
  */
 public class Q1406 {
 
@@ -34,29 +44,6 @@ public class Q1406 {
         int count = Integer.parseInt(reader.readLine());
         int index = temp.length();
         String input;
-
-
-        for (int i=0; i<count; ++i) {
-            input = reader.readLine();
-
-            if (input.equals("L")) {
-                if (index != 1) {
-                    index = index-1;
-                }
-            } else if (input.equals("D")) {
-                if (index != temp.length()) {
-                    index = index+1;
-                }
-
-            } else if (input.startsWith("P")) {
-                temp = temp.substring(0, index-1) + input.substring(input.indexOf(" ")+1) + temp.substring(index-1);
-            }
-
-        }
-
-        System.out.print(temp);
-
-
 
     }
 
