@@ -30,61 +30,58 @@ import java.util.List;
  *  >
  *
  */
-public class Main {
+public class Q10845 {
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         List<String> list = new LinkedList<>();
-        StringBuilder sb = new StringBuilder();
 
         int spin = getRepeatCount(reader);
 
         for (int i = 0; i < spin; ++i) {
             String input = reader.readLine();
 
-            inputHandling(list, sb, input);
+            inputHandling(list, input);
         }
-
-        System.out.println(sb);
 
     }
 
-    private static void inputHandling(List<String> list, StringBuilder sb, String input) {
+    private static void inputHandling(List<String> list, String input) {
         if (input.startsWith("push")) {
             push(list, input);
         } else if (input.equals("pop")) {
-            pop(list, sb);
+            pop(list);
         } else if (input.equals("size")) {
-            sb.append(list.size()).append("\n");
+            System.out.println(list.size());
         } else if (input.equals("empty")) {
-            empty(list, sb);
+            empty(list);
         } else if (input.equals("front")) {
-            front(list, sb);
+            front(list);
         } else if (input.equals("back")) {
-            back(list, sb);
+            back(list);
         }
     }
 
-    private static void back(List<String> list, StringBuilder sb) {
-        if (list.size() == 0) sb.append(-1);
-        else sb.append(list.get(list.size() - 1)).append("\n");
+    private static void back(List<String> list) {
+        if (list.size() == 0) System.out.println(-1);
+        else System.out.println(list.get(list.size() - 1));
     }
 
-    private static void front(List<String> list, StringBuilder sb) {
-        if (list.size() == 0) sb.append(-1).append("\n");
-        else sb.append(list.get(0)).append("\n");
+    private static void front(List<String> list) {
+        if (list.size() == 0) System.out.println(-1);
+        else System.out.println(list.get(0));
     }
 
-    private static void empty(List<String> list, StringBuilder sb) {
-        if (list.size() == 0 ) sb.append(1+"\n");
-        else sb.append(0).append("\n");
+    private static void empty(List<String> list) {
+        if (list.size() == 0 ) System.out.println(1);
+        else System.out.println(0);
     }
 
-    private static void pop(List<String> list, StringBuilder sb) {
-        if (list.size() == 0) sb.append(-1).append("\n");
+    private static void pop(List<String> list) {
+        if (list.size() == 0) System.out.println(-1);
         else {
-            sb.append(list.get(0)).append("\n");
+            System.out.println(list.get(0));
             list.remove(0);
         }
     }
