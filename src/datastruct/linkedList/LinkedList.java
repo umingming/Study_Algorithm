@@ -30,7 +30,7 @@ public class LinkedList {
         Node next = null;
     }
 
-    LinkedList() {
+    public LinkedList() {
         header = new Node();
     }
 

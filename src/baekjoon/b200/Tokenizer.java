@@ -6,9 +6,10 @@ import java.util.StringTokenizer;
 public class Tokenizer {
     public static void main(String[] args) {
 
-        BufferedReader reader = new BufferedReader();
+        String str = "I'm Developer Genius";
+        StringTokenizer temp = new StringTokenizer(str);
 
-        StringTokenizer temp = re
+        while(temp.hasMoreTokens()) System.out.println(temp.nextToken());
 
     }
 }
