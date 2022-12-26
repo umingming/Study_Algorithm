@@ -45,7 +45,7 @@ import java.util.Stack;
  *  > L일 시
  *      > leftStack이 비지 않았으면
  *      > rightStack에 leftStack값을 pop하여 push한다.
- *  > R일 시
+ *  > D일 시
  *      > rightStack이 비지 않았으면
  *      > leftStack에 rightStack값을 pop하여 push한다.
  *  > B일 시
@@ -61,19 +61,19 @@ public class Q1406 {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         String input = reader.readLine();
+        String[] inputArray = input.split("");
         int count = Integer.parseInt(reader.readLine());
 
-        Stack<Character> leftStack = new Stack();
-        Stack<Character> rightStack = new Stack();
+        Stack<String> leftStack = new Stack();
+        Stack<String> rightStack = new Stack();
 
         for (int i = 0; i < input.length(); ++i) {
-            leftStack.push(input.charAt(i));
+            leftStack.push(inputArray[i]);
         }
 
         for (int i = 0; i < count; ++i) {
 
-            String command = reader.readLine();
-            String[] commandArray = command.split(" ");
+            String[] commandArray = reader.readLine().split(" ");
 
             switch (commandArray[0]) {
                 case "L":
@@ -81,7 +81,7 @@ public class Q1406 {
                         rightStack.push(leftStack.pop());
                     }
                     break;
-                case "R":
+                case "D":
                     if (!rightStack.empty()) {
                         leftStack.push(rightStack.pop());
                     }
@@ -92,9 +92,7 @@ public class Q1406 {
                     }
                     break;
                 case "P":
-                    for (int j = 0; j < commandArray[1].length(); ++j) {
-                        leftStack.push(commandArray[1].charAt(j));
-                    }
+                    leftStack.push(commandArray[1]);
                     break;
             }
         }
