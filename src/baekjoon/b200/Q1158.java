@@ -28,7 +28,7 @@ import java.util.Queue;
  * 4. k-1번째까지는 수를 뒤로 보내주고, k번째에는 StringBuffer에 넣어준다.
  *
  */
-public class Main {
+public class Q1158 {
     public static void main(String[] args) throws Exception {
 
         Queue<Integer> queue = new LinkedList<>();
