@@ -1,9 +1,9 @@
 package baekjoon.b201;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * [문제] 17413
@@ -19,60 +19,64 @@ import java.util.LinkedList;
  * <p>
  * [예제 입력]
  * baekjoon online judge
- * <problem>17413<is hardest>problem ever<end>
- * <p>
  * [예제 출력]
  * noojkeab enilno egduj
- * <problem>31471<is hardest>melborp reve<end>
- * <p>
  * [풀이]
- * 1. Deque, BufferedReader, String, StringBuilder 선언
- * 2. 모든 글자를 Deque에 순서대로 넣어준다 (lastPush)
- * 3. firstPeek을 해서 그게 "<"인지 판별한다
- * > 맞다면 ">"가 나올때까지 firstPop (반복문)
- * > 아니라면 lastPop
+ * 1. Stack, String 선언
+ * 2. flag 선언
+ * 3. 한글자씩 끊어서 그 글자가 무엇인지 판별
+ *  > "<"일 시
+ *      > stack의 값 전부 pop하여 append
+ *      > isBracket Flag True로 변경
+ *  > ">"일 시
+ *      > 해당 값 append
+ *      > isBracket Flag false로 변경
+ *  > "플래그 판정"
+ *  > " "일 시
+ *      > 해당 값 append
+ *  > else
+ *      > stack에 push
  */
 public class Q17413 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-
-        String input = "<ab cd>ef gh<ij kl>";
-        Deque<Character> deque = new LinkedList<>();
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String input = reader.readLine();
         StringBuilder sb = new StringBuilder();
-        String[] inputArray = input.split(" ");
+        Stack<Character> stack = new Stack<>();
+        boolean isBracket = false;
 
-        for (int i = 0; i < inputArray.length; ++i) {
+        for (int i=0; i<input.length(); ++i) {
 
-            for (int j = 0; j < inputArray[i].length(); ++j) {
-                deque.push(inputArray[i].charAt(j));
+            char c = input.charAt(i);
+
+            if (c == '<') {
+                isBracket = true;
+                printStack(stack);
+                System.out.print(c);
+            } else if (c == '>') {
+                isBracket = false;
+                System.out.print(c);
+            } else if (isBracket) {
+                System.out.print(c);
+            } else if (c == ' ') {
+                printStack(stack);
+                System.out.print(c);
+            } else {
+                stack.push(c);
             }
-
-            while (!deque.isEmpty()) {
-
-                if (deque.getFirst().equals("<")) {
-
-                    while (!deque.getFirst().equals(">")) {
-                        sb.append(deque.getLast());
-                        sb.append(deque.removeLast());
-                    }
-
-                    sb.append(deque.pop());
-
-                } else {
-                    sb.append(deque.getFirst());
-                    deque.removeFirst();
-                }
-
-            }
-
-            sb.append(" ");
         }
 
-
-        sb.delete(sb.length()-1, sb.length());
-        System.out.println(sb);
+        printStack(stack);
 
 
     }
+
+    private static void printStack(Stack<Character> stack) {
+        while(!stack.isEmpty()) {
+            System.out.print(stack.pop());
+        }
+    }
+
+
 }
