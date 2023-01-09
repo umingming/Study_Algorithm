@@ -1,6 +1,9 @@
 package baekjoon.b201;
 
 
+import com.sun.org.apache.xalan.internal.xsltc.util.IntegerArray;
+
+import java.io.*;
 import java.util.Stack;
 
 /**
@@ -20,25 +23,96 @@ import java.util.Stack;
  * -1 8 8 -1
  *
  * [풀이]
- * 1. Pointer로 배열 0부터 length까지 돌아준다
- * 2. 그
+ * 1. int로 다 치환
+ * 2. 첫번째 인덱스 저장
+ * 3. for문을 돌아준다
+ *  > 반복문을 돌 때 스텍이 비어있으면 i를 push 해준다.
+ *  > 비지 않고 a[stack.peek] < a[i]이면
+ *          > ans[stack.pop] = a[i]
+ *  >
  * 3.
  *
  */
 public class Q17298 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Stack stack = new Stack();
+        // 리더 생성
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        String temp = "3 5 2 7";
-        String[] tempArr = temp.split(" ");
+        // 임시로 받고
+        String[] temp = "3 5 2 4 6".split(" ");
 
-        for (int i=0; i<temp.length(); ++i) {
+        // int 로 변환할 배열 생성
+        int[] a = new int[temp.length];
+        // 정답 배열 생성
+        int[] ans = new int[temp.length];
 
-            while(!stack.empty() && stack.peek() < stack.pop())
-
+        for (int i = 0; i < temp.length; i++) {
+            // int로 변환
+            a[i] = Integer.parseInt(temp[i]);
         }
+        // 스택 생성
+        Stack<Integer> stack = new Stack<>();
+
+        // 첫번째 인덱스 저장
+        stack.push(0);
+
+        /**
+         * 35246
+         * Step 1
+         * Stack = {0}
+         * i = 1
+         * a[0] 3 < a[1] 5?
+         * ans[0] = 5
+         * Stack = {1}
+         *
+         * Step 2
+         * Stack = {1}
+         * i = 2
+         * a[1] 5 < a[2] 2?
+         * Stack = {1, 2}
+         *
+         * Step 3
+         * Stack = {1, 2}
+         * i = 3
+         * a[1] 5 < a[3] 4
+         * Stack = {1, 2, 4}
+         *
+         * Step 4
+         * Stack = {1, 2, 4}
+         * i = 4
+         * a[1] 5 < a[4] 6
+         * ans[1] = 6
+         *
+         * 5, 6, -1 -1 -1
+         */
+
+        for (int i = 1; i < temp.length; i++) {
+            if (stack.isEmpty()) {
+                // 반복문에 들어올 때 스택이 비어있으면 인덱스 저장
+                stack.push(i);
+            }
+
+            // 비어있지 않고 숫자가 인덱스 가장 위쪽 숫자보다 크면
+            while (!stack.isEmpty() && a[stack.peek()] < a[i]) {
+                // 정답 배열 중 스택의 가장 위쪽 숫자와 같은 인덱스에 i번째 숫자를 넣는다
+                ans[stack.pop()] = a[i];
+            }
+            // 다음번에 비교할 숫자를 stack에 집어넣는다
+            stack.push(i);
+        }
+
+        // 반복문을 다 돌고 나왔는데 스택이 비어있지 않다면 빌 때 까지
+        while (!stack.empty()) {
+            // stack에 쌓인 index에 -1을 넣고
+            ans[stack.pop()] = -1;
+        }
+
+        for (Integer integer : ans) {
+            System.out.println(integer);
+        }
+
 
     }
 
