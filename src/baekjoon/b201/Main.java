@@ -23,35 +23,61 @@ public class Main {
     public static void main(String[] args) {
 
         int[] value = {1, 1, 2, 3, 4, 2, 1};
-        Stack<Integer> stack = new Stack<>();
 
         Map<Integer, Integer> numberTypeMap = new HashMap<>();
 
+        checkNumberCount(value, numberTypeMap);
+        assignValue(value, numberTypeMap);
+
+        Stack<Integer> stack = new Stack();
+
+        stack.push(0);
+
+        printValue(value);
+
+//        for (int i=1; i<value.length; ++i) {
+//            while ((!stack.isEmpty()) && value[stack.peek()] < value[i]) {
+//                value[stack.pop()] = value[i];
+//            }
+//            stack.push(i);
+//        }
+//
+//        while(!stack.isEmpty()) {
+//            value[stack.pop()] = -1;
+//        }
+//
+//        for(int i : value) {
+//            System.out.println(i);
+//        }
+
+
+    }
+
+    public static void printValue(int [] value) {
 
         for(int i : value) {
-            numberTypeMap.put(i, 0);
+            System.out.println(i);
         }
 
-        for(int i : value) {
-            for(int j : numberTypeMap.keySet()) {
-                if (i == j) {
-                    numberTypeMap.put(i, numberTypeMap.get(i) + 1);
-                }
+    }
+
+    private static void assignValue(int[] value, Map<Integer, Integer> numberTypeMap) {
+        for (int i = 0; i< value.length; ++i) {
+            if (numberTypeMap.containsKey(value[i])) {
+                value[i] = numberTypeMap.get(value[i]);
             }
         }
+    }
 
-        for(int i : value) {
-            for(int j : numberTypeMap.keySet()) {
-                if (i == j) {
-                    i = numberTypeMap.get(j);
-                }
+    private static void checkNumberCount(int[] value, Map<Integer, Integer> numberTypeMap) {
+        for (int i = 0; i< value.length; ++i) {
+            if(numberTypeMap.containsKey(value[i])) {
+                int count = numberTypeMap.get(value[i]);
+                numberTypeMap.put(value[i], count + 1);
+            } else {
+                numberTypeMap.put(value[i], 1);
             }
         }
-
-        for(int i : value) {
-            System.out.println(numberTypeMap.get(i));
-        }
-
     }
 
 }
