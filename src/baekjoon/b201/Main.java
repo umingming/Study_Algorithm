@@ -1,77 +1,55 @@
 package baekjoon.b201;
 
-
-import java.io.*;
-import java.util.Stack;
+import java.util.*;
 
 /**
- * 크기가 N인 수열 A = A1, A2, ..., AN이 있다. 수열의 각 원소 Ai에 대해서 오큰수 NGE(i)를 구하려고 한다.
- * Ai의 오큰수는 오른쪽에 있으면서 Ai보다 큰 수 중에서 가장 왼쪽에 있는 수를 의미한다. 그러한 수가 없는 경우에 오큰수는 -1이다.
+ * [문제]
+ * 크기가 N인 수열 A = A1, A2, ..., AN이 있다. 수열의 각 원소 Ai에 대해서 오등큰수 NGF(i)를 구하려고 한다.
  *
- * 예를 들어, A = [3, 5, 2, 7]인 경우 NGE(1) = 5, NGE(2) = 7, NGE(3) = 7, NGE(4) = -1이다. A = [9, 5, 4, 8]인 경우에는 NGE(1) = -1, NGE(2) = 8, NGE(3) = 8, NGE(4) = -1이다.
+ * Ai가 수열 A에서 등장한 횟수를 F(Ai)라고 했을 때, Ai의 오등큰수는 오른쪽에 있으면서 수열 A에서 등장한 횟수가 F(Ai)보다 큰 수 중에서 가장 왼쪽에 있는 수를 의미한다.
+ * 그러한 수가 없는 경우에 오등큰수는 -1이다.
  *
- * [예제]
- * 3 5 2 7
- * [결과]
- * 5 7 7 -1
- *
- * 예제
- * 9 5 4 8
- * [결과]
- * -1 8 8 -1
+ * 예를 들어, A = [1, 1, 2, 3, 4, 2, 1]인 경우 F(1) = 3, F(2) = 2, F(3) = 1, F(4) = 1이다.
+ * A1의 오른쪽에 있으면서 등장한 횟수가 3보다 큰 수는 없기 때문에, NGF(1) = -1이다.
+ * A3의 경우에는 A7이 오른쪽에 있으면서 F(A3=2) < F(A7=1) 이기 때문에, NGF(3) = 1이다. NGF(4) = 2, NGF(5) = 2, NGF(6) = 1 이다.
  *
  * [풀이]
- * 1. 내 바로 오른쪽의 수가 나보다 큰지를 판별
- * 2. 그렇다면 그게 오큰수~
- *  > 스텍에 값이 있는지를 보고 그 값이랑도 판별 해준당
- * 3. 만약 그렇지 않다면 Stack에 넣어준다
- *
+ * 1. 돌면서 각 숫자들이 몇 번 선언 되었는지 확인해준다
+ * 2. 그걸로 배열을 만든다
+ * 3. 2번의 배열으로 오등큰수 알고리즘을 돌려보자
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        // 리더 생성
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        // 임시로 받고
-        String[] temp = "1 3 2 10 4 3 7 1 6 4".split(" ");
-
-        // int 로 변환할 배열 생성
-        int[] a = new int[temp.length];
-        // 정답 배열 생성
-        int[] ans = new int[temp.length];
-
-        for (int i = 0; i < temp.length; i++) {
-            a[i] = Integer.parseInt(temp[i]);
-        }
+        int[] value = {1, 1, 2, 3, 4, 2, 1};
         Stack<Integer> stack = new Stack<>();
 
+        Map<Integer, Integer> numberTypeMap = new HashMap<>();
 
 
-        for(int j=0; j<a.length-1; ++j) {
+        for(int i : value) {
+            numberTypeMap.put(i, 0);
+        }
 
-            if (a[j] < a[j+1]) {
-                ans[j] = a[j];
-                if (!stack.isEmpty() && a[stack.peek()] < a[j]) {
-                    while(!stack.isEmpty()) {
-                        ans[stack.pop()] = a[j];
-                    }
+        for(int i : value) {
+            for(int j : numberTypeMap.keySet()) {
+                if (i == j) {
+                    numberTypeMap.put(i, numberTypeMap.get(i) + 1);
                 }
-            } else {
-                stack.push(j);
             }
-
         }
 
-        while (!stack.isEmpty()) {
-            ans[stack.pop()] = -1;
+        for(int i : value) {
+            for(int j : numberTypeMap.keySet()) {
+                if (i == j) {
+                    i = numberTypeMap.get(j);
+                }
+            }
         }
 
-        ans[ans.length-1] = -1;
-
-        for (int i : ans) {
-            System.out.println(i);
+        for(int i : value) {
+            System.out.println(numberTypeMap.get(i));
         }
 
     }
