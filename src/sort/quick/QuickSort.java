@@ -11,54 +11,59 @@ package sort.quick;
 public class QuickSort {
 
     public static void main(String[] args) {
+
         int[] arr = {3, 9, 4, 7, 5, 0, 1, 6, 8, 2};
-        Quick(arr);
+        printArray(arr);
+        quickSort(arr);
+        printArray(arr);
 
+    }
 
-        for (int i : arr) {
-            System.out.println(i);
+    public static void printArray(int[] arr) {
+        for(int i=0; i<arr.length-1; ++i) {
+            System.out.print(arr[i] + "->");
         }
 
+        System.out.println(arr[arr.length-1]);
     }
 
-    public static void Quick(int[] arr) {
-        Quick(arr, arr.length/2);
+    public static void quickSort(int[] arr) {
+        quickSort(arr, 0, arr.length-1);
     }
 
-    public static void Quick(int[] arr, int pivotIndex) {
-        if (pivotIndex < arr.length) {
+    public static void quickSort(int[] arr, int start, int end) {
+        int part2 = partition(arr, start, end);
+        if (start < part2-1) {
+            quickSort(arr, start, part2 -1);
+        }
 
-            int preValue = 0;
-            int postValue = 0;
-
-            int preIndex = 0;
-            int postIndex = 0;
-
-            for (int i=0; i<=pivotIndex; ++i) {
-                if (arr[i] >= arr[pivotIndex]) {
-                    preValue = arr[i];
-                    preIndex = i;
-                }
-                break;
-            }
-
-            for (int i=arr.length-1; i>pivotIndex; --i) {
-
-                if (arr[i] < arr[pivotIndex]) {
-                    postValue = arr[i];
-                    postIndex = i;
-
-                    arr[preIndex] = postValue;
-                    arr[postIndex] = preValue;
-                }
-                break;
-
-            }
-
-            Quick(arr, pivotIndex+1);
+        if (part2 < end) {
+            quickSort(arr, part2, end);
         }
     }
 
+    public static int partition(int[] arr, int start, int end) {
+        int pivot = arr[(start + end) / 2];
 
+        while (start <= end) {
+            while (arr[start] < pivot) start++;
+            while (arr[end] > pivot) end--;
+            if(start <= end) {
+                swap (arr, start, end);
+                start++;
+                end--;
+            }
+        }
+
+        return start;
+    }
+
+    public static void swap(int[] arr, int source, int target) {
+
+        int temp = arr[source];
+        arr[source] = arr[target];
+        arr[target] = temp;
+
+    }
 
 }
