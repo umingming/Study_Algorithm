@@ -1,7 +1,5 @@
-package baekjoon.b203;
+package baekjoon.b203_math;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 /**

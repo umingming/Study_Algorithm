@@ -1,4 +1,4 @@
-package baekjoon.b200;
+package baekjoon.b200_start;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

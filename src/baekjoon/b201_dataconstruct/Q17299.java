@@ -1,4 +1,4 @@
-package baekjoon.b201;
+package baekjoon.b201_dataconstruct;
 
 /**
  * 크기가 N인 수열 A = A1, A2, ..., AN이 있다. 수열의 각 원소 Ai에 대해서 오등큰수 NGF(i)를 구하려고 한다.

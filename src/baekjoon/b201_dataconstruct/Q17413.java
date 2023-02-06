@@ -1,4 +1,4 @@
-package baekjoon.b201;
+package baekjoon.b201_dataconstruct;
 
 import java.io.BufferedReader;
 import java.io.IOException;
