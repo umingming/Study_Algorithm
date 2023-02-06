@@ -1,4 +1,4 @@
-package baekjoon.b203_math;
+package baekjoon.b203_dataconstruct;
 
 import java.util.Stack;
 
