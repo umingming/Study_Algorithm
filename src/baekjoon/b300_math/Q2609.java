@@ -19,8 +19,6 @@ import java.io.InputStreamReader;
  * 6
  * 72
  *
- *
- *
  */
 public class Q2609 {
 
@@ -37,34 +35,24 @@ public class Q2609 {
 
         // 최대 공약수
         int gcd = 1;
-        
-        boolean loopFlag = true;
 
-        while (loopFlag) {
 
-            if (intArr[0] % 2 == 0 && intArr[1] % 2 == 0) {
-                intArr[0] = intArr[0] / 2;
-                intArr[1] = intArr[1] / 2;
-                gcd = gcd * 2;
-            } else if (intArr[0] % 3 == 0 && intArr[1] % 3 == 0) {
-                intArr[0] = intArr[0] / 3;
-                intArr[1] = intArr[1] / 3;
-                gcd = gcd * 3;
-            } else if (intArr[0] % 5 == 0 && intArr[1] % 5 == 0) {
-                intArr[0] = intArr[0] / 5;
-                intArr[1] = intArr[1] / 5;
-                gcd = gcd * 5;
-            } else if (intArr[0] % 7 == 0 && intArr[1] % 7 == 0) {
-                intArr[0] = intArr[0] / 7;
-                intArr[1] = intArr[1] / 7;
-                gcd = gcd * 7;
-            } else loopFlag = false;
+        System.out.println(lcd(intArr[0], intArr[1]));
+        System.out.println(gcd(intArr[0], intArr[1]));
 
+
+    }
+
+    private static int lcd(int a, int b) {
+        return a * b / gcd(a, b);
+    }
+
+    private static int gcd(int a, int b) {
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
         }
-
-        System.out.println(gcd);
-        System.out.println(gcd * intArr[0] * intArr[1]);
-
-
+        return a;
     }
 }
