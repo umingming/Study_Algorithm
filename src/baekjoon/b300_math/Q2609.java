@@ -36,9 +36,12 @@ public class Q2609 {
         // 최대 공약수
         int gcd = 1;
 
+        int a = intArr[0];
+        int b = intArr[1];
 
-        System.out.println(lcd(intArr[0], intArr[1]));
-        System.out.println(gcd(intArr[0], intArr[1]));
+
+        System.out.println(lcd(a, b));
+        System.out.println(gcd(a, b));
 
 
     }

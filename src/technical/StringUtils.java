@@ -5,4 +5,8 @@ public class StringUtils {
 
 
     }
+
+    public static boolean isNotBlank(String toString) {
+        return !toString.isEmpty();
+    }
 }
