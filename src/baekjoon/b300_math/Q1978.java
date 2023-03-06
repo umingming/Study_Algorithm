@@ -1,5 +1,6 @@
 package baekjoon.b300_math;
 
+import javax.print.DocFlavor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,29 +20,53 @@ import java.io.InputStreamReader;
  * [결과 1]
  * 3
  *
- * [풀이]
- * 2,3으로 나눴을 때 나누어지면 소수?
  *
  */
 public class Q1978 {
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        int firstInput = Integer.parseInt(reader.readLine());
+        int repeat = Integer.parseInt(reader.readLine());
+        int[] arr = new int[repeat];
 
-        int[] arr = new int[firstInput];
+        String[] sArr = reader.readLine().split(" ");
 
-        String[] temp = reader.readLine().split(" ");
-        int sosooCount = 0;
+        for(int i=0; i<arr.length; ++i) {
+            arr[i] = Integer.parseInt(sArr[i]);
+        }
 
-        for(int i=0; i<temp.length; ++i) {
+        int resultCount = 0;
+
+        for (int j : arr) {
+
+            if (check(j)) {
+                resultCount++;
+            }
 
         }
 
-        System.out.println(sosooCount);
+        System.out.println(resultCount);
 
+    }
 
+    public static boolean check(int n) {
+
+        boolean isFlag = false;
+
+        for (int i=2; i<n; ++i) {
+
+            if (n % i == 0) {
+                isFlag = false;
+                break;
+            } else {
+                isFlag = true;
+            }
+
+        }
+
+        return isFlag;
 
     }
 
