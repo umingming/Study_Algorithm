@@ -6,5 +6,5 @@ import java.util.Map;
 
 public class RdbmSRepository {
 
-    public static List<List<Map<String, String>>> schema = new ArrayList<>();
+    public static List<List<Map<Object, String>>> schema = new ArrayList<>();
 }
