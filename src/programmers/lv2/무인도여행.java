@@ -75,15 +75,90 @@ public class 무인도여행 {
             for(int x=0; x< mapsList[y].length; ++x) {
                 String s = mapsList[y][x];
                 if (!s.equals("X")) {
-                if (x == 0 && y == 0) {
+
+                    //x, y값 모두 0일 시
+                    if (x == 0 && y == 0) {
                     mapsMap.put(mapsPointer, x+","+y);
                     ++mapsPointer;
-                } else(x == 0) {
+
+                    //x값만 0일 시
+                    } else if (x == 0) {
+
+                        //y-1에 값이 있으면 y-1의 key값에 값을 넣는다.
+                        if (!mapsList[y-1][x].equals("X")) {
+
+                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
+                                if (entry.getValue().equals(x+","+(y-1))) {
+                                    mapsMap.put(entry.getKey(), x+","+y);
+                                }
+                            }
+
+                        //y-1에 값이 없으면
+                        } else {
+                            mapsMap.put(mapsPointer, x+","+y);
+                            ++mapsPointer;
+                        }
+
+                    //y값만 0일 시
+                    } else if (y == 0) {
+
+                        //x-1에 값이 있으면 x-1의 key값에 값을 넣는다.
+                        if (!mapsList[y][x-1].equals("X")) {
+
+                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
+                                if (entry.getValue().equals(x-1+","+y)) {
+                                    mapsMap.put(entry.getKey(), x+","+y);
+                                }
+                            }
+                            //x-1에 값이 없으면
+                        } else {
+                            mapsMap.put(mapsPointer, x+","+y);
+                            ++mapsPointer;
+                        }
+
+                    //x, y 모두 값이 0이 아닐 시
+                    } else {
+                        //x, y-1과 x-1, y에 값이 있을 시
+                        if (!mapsList[y-1][x].equals("X")&&!mapsList[y][x-1].equals("X")) {
+
+                            int left;
+                            int top;
+                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
+
+                                if (entry.getValue().equals(x+","+(y-1))) {
+                                    left = entry.getKey();
+                                }
+
+                                if (entry.getValue().equals(x-1+","+y))) {
+                                    top = entry.getKey();
+                                }
+
+                            }
+
+                            if (left == top) {
+                                mapsMap.put(top, x+","+y);
+                            } else {
+                                mapsMap.get(left);
+                            }
+                        } else if (!mapsList[y-1][x].equals("X")) {
+
+                        }
+
+
+                        /*
+                        * - x-1에만 값이 있을 시
+                         *                  - value중 x-1 위치를 value를 넣는다.
+                         *              - y-1에만 값이 있을 시
+                         *                  - value중 y-1 위치를 value를 넣는다.
+                         *              - x-1, y-1모두 값이 있을 시
+                         *                  - value중 x-1 위치와 y-1값을 찾아 그 둘의 키값이 같은지 확인한다.
+                         *                      - 같다면 그 키값에 해당 위치의 index까지 넣는다.
+                         *                      - 다르다면 하나의 키값에 모두 합친 후 해당 위치의 index까지 넣는다.
+                        * */
+
+                    }
 
                 }
-            }
-
-
             }
 
         }
