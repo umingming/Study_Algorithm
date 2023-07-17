@@ -1,7 +1,7 @@
 package programmers.lv2;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 메리는 여름을 맞아 무인도로 여행을 가기 위해 지도를 보고 있습니다.
@@ -27,29 +27,33 @@ import java.util.Map;
  * [][] 이렇게 있을 때 y와 x축 모두 순서대로 돈다고 치면 위와 좌측만 확인하면 될 듯.
  *
  * 1. 주어진 값을 이차원 배열로 만든다.
- * 2. 이차원 배열을 순회하면서 이어진 것 끼리는 무조건 하나의 map에 묶어준다.
- *  - 어차피 모든 값을 순회하기 때문에 왼쪽과 위쪽만 확인하면 된다.
- *      - 값이 x일 시 재끼고 아니면 좌표값을 map의 value에 추가해줄 것.
- *          - key값을 점진적으로 늘려주기 위해 포인터를 선언해준다
- *      - 값이 x가 아닐 시
- *          - x, y값 모두 0일 시
- *             - 그냥 map에 넣고 key는 하나 플러스
- *          - 만약 x값만 0일 시
- *              - x-1 값은 확인하지 않는다.
- *          - 만약 y값만 0일 시
- *              - y-1값은 확인하지 않는다
- *          - x, y 모두 값이 0이 아닐 시
- *              - x-1에만 값이 있을 시
- *                  - value중 x-1 위치를 value를 넣는다.
- *              - y-1에만 값이 있을 시
- *                  - value중 y-1 위치를 value를 넣는다.
- *              - x-1, y-1모두 값이 있을 시
- *                  - value중 x-1 위치와 y-1값을 찾아 그 둘의 키값이 같은지 확인한다.
- *                      - 같다면 그 키값에 해당 위치의 index까지 넣는다.
- *                      - 다르다면 하나의 키값에 모두 합친 후 해당 위치의 index까지 넣는다.
+ * 2. 이차원 배열을 순회하면서 이어진 것 끼리는 무조건 하나의 map<Integer, List<String>에 묶어줄 예정이다 .이를 위해 map을 하나 만든다.
+ *  * 어차피 모든 값을 순회하기 때문에 왼쪽과 위쪽만 확인하면 된다.
+ * 3. key값을 점진적으로 늘려주기 위해 포인터를 선언해준다
+ * 4. 값이 x가 아닐 시
+ *  4.1. x, y 모두 값이 0이 아닐 시
+ *      4.1.1. x-1, y-1모두 값이 있을 시
+ *          4.1.1.1. value중 x-1 위치와 y-1값을 찾아 그 둘의 키값이 같은지 확인한다.
+ *              4.4.1.1.1. 같다면 그 키값에 해당 위치의 index까지 넣는다.
+ *              4.4.1.1.2. 다르다면 x-1 키값에 모두 합친 후 현재 위치의 index까지 value로 넣는다.
+ *      4.1.2. x-1에만 값이 있을 시
+ *          4.1.2.1. value중 x-1 위치를 value를 넣는다.
+ *      4.1.3. y-1에만 값이 있을 시
+ *          4.1.3.1. value중 y-1 위치를 value를 넣는다.
  *
+ *  4.2. x값만 0일 시
+ *      4.2.1. x-1 값은 확인하지 않는다.
+ *      4.2.2. y-1 위치만 확인한다
+ *          4.2.2.1. "X"가 아니면 해당 위치의 key값을 찾아 그 key값에 넣는다.
+ *  4.3. y값만 0일 시
+ *      4.2.1. y-1 값은 확인하지 않는다.
+ *      4.2.2. x-1 위치만 확인한다
+ *          4.2.2.1. "X"가 아니면 해당 위치의 key값을 찾아 그 key값에 넣는다.
+ *  4.4. x, y값 모두 0일 시
+ *      4.4.1. 그냥 map에 넣고 key는 하나 플러스
  *
- * 3. 최종적으로 만들어진 map의 value를 해당 위치에 있는 값으로 다 더한 값을 만들어 array로 만들어준다.
+ * 5. 최종적으로 만들어진 map을 가지고 key를 기준으로 value의 인덱스를 찾아 합을 누적해주는 map을 만든 후 오름차순을 소팅한다.
+ *
  *
  */
 public class 무인도여행 {
@@ -60,110 +64,85 @@ public class 무인도여행 {
 
     public static int[] solution(String[] maps) {
 
-        // 1.
-        String[][] mapsList = new String[100][100];
+        //1. 주어진 값을 이차원 배열로 만든다.
+        String[][] mapsArray = new String[100][100];
+
         for(int i=0; i<maps.length; ++i) {
-            mapsList[i] = maps[i].split("");
+            mapsArray[i] = maps[i].split("");
         }
 
-        // 2.
-        int mapsPointer = 0;
-        Map<Integer, String> mapsMap = new HashMap<>();
-        //y축
-        for(int y=0; y<mapsList.length; ++y) {
-            //x축
-            for(int x=0; x< mapsList[y].length; ++x) {
-                String s = mapsList[y][x];
-                if (!s.equals("X")) {
+        //2. 이차원 배열을 순회하면서 이어진 것 끼리는 무조건 하나의 map<Integer, List<String>에 묶어줄 예정이다 .이를 위해 map을 하나 만든다.
+        Map<Integer, List<String>> mapsMap = new HashMap<>();
 
-                    //x, y값 모두 0일 시
-                    if (x == 0 && y == 0) {
-                    mapsMap.put(mapsPointer, x+","+y);
-                    ++mapsPointer;
+        //3. key값을 점진적으로 늘려주기 위해 포인터를 선언해준다
+        int keyPointer = 0;
 
-                    //x값만 0일 시
-                    } else if (x == 0) {
 
-                        //y-1에 값이 있으면 y-1의 key값에 값을 넣는다.
-                        if (!mapsList[y-1][x].equals("X")) {
+        for(int y=0; y<mapsArray.length; ++y) {
+            for(int x=0; x<mapsArray[y].length; ++x) {
 
-                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
-                                if (entry.getValue().equals(x+","+(y-1))) {
-                                    mapsMap.put(entry.getKey(), x+","+y);
+                //4. 값이 X가 아닐 시
+                if (!mapsArray[y][x].equals("X")) {
+
+                    //4.1. x, y 모두 값이 0이 아닐 시
+                    if (x > 0 && y > 0) {
+
+
+                        //4.1.1. x-1, y-1모두 값이 있을 시
+                        if (!mapsArray[y-1][x].equals("X") && !mapsArray[y][x-1].equals("X")) {
+
+                            String top = mapsArray[y-1][x];
+                            String left = mapsArray[y][x-1];
+
+
+                            int leftKey = 0;
+                            int topKey = 0;
+
+                            //4.1.1.1. value중 x-1 위치와 y-1값을 찾아 그 둘의 키값이 같은지 확인한다.
+                            for(Map.Entry<Integer, List<String>> entry : mapsMap.entrySet()) {
+
+                                if (entry.getValue().contains(y-1+","+x)) {
+                                    topKey = entry.getKey();
+                                }
+
+                                if (entry.getValue().contains(y+","+(x-1))) {
+                                    leftKey = entry.getKey();
+                                }
+
+                                if (topKey>0 && leftKey>0) {
+                                    break;
                                 }
                             }
 
-                        //y-1에 값이 없으면
-                        } else {
-                            mapsMap.put(mapsPointer, x+","+y);
-                            ++mapsPointer;
-                        }
-
-                    //y값만 0일 시
-                    } else if (y == 0) {
-
-                        //x-1에 값이 있으면 x-1의 key값에 값을 넣는다.
-                        if (!mapsList[y][x-1].equals("X")) {
-
-                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
-                                if (entry.getValue().equals(x-1+","+y)) {
-                                    mapsMap.put(entry.getKey(), x+","+y);
-                                }
-                            }
-                            //x-1에 값이 없으면
-                        } else {
-                            mapsMap.put(mapsPointer, x+","+y);
-                            ++mapsPointer;
-                        }
-
-                    //x, y 모두 값이 0이 아닐 시
-                    } else {
-                        //x, y-1과 x-1, y에 값이 있을 시
-                        if (!mapsList[y-1][x].equals("X")&&!mapsList[y][x-1].equals("X")) {
-
-                            int left;
-                            int top;
-                            for(Map.Entry<Integer, String> entry: mapsMap.entrySet()) {
-
-                                if (entry.getValue().equals(x+","+(y-1))) {
-                                    left = entry.getKey();
-                                }
-
-                                if (entry.getValue().equals(x-1+","+y))) {
-                                    top = entry.getKey();
-                                }
-
-                            }
-
-                            if (left == top) {
-                                mapsMap.put(top, x+","+y);
+                            //4.4.1.1.1. 같다면 그 키값에 해당 위치의 index까지 넣는다.
+                            if (leftKey == topKey) {
+                                mapsMap.get(leftKey).add(y+","+x);
+                            //4.4.1.1.2. 다르다면 x-1 키값에 모두 합친 후 현재 위치의 index까지 value로 넣는다.
                             } else {
-                                mapsMap.get(left);
+
+                                for(String s : mapsMap.get(topKey)) {
+                                    mapsMap.get(leftKey).add(s);
+                                }
+                                mapsMap.get(leftKey).add(y+""+x);
+                                mapsMap.get(topKey).clear();
+
                             }
-                        } else if (!mapsList[y-1][x].equals("X")) {
+
+
+
+
+
 
                         }
 
-
-                        /*
-                        * - x-1에만 값이 있을 시
-                         *                  - value중 x-1 위치를 value를 넣는다.
-                         *              - y-1에만 값이 있을 시
-                         *                  - value중 y-1 위치를 value를 넣는다.
-                         *              - x-1, y-1모두 값이 있을 시
-                         *                  - value중 x-1 위치와 y-1값을 찾아 그 둘의 키값이 같은지 확인한다.
-                         *                      - 같다면 그 키값에 해당 위치의 index까지 넣는다.
-                         *                      - 다르다면 하나의 키값에 모두 합친 후 해당 위치의 index까지 넣는다.
-                        * */
 
                     }
 
+
                 }
+
             }
-
         }
-
-
 
 
         return null;
