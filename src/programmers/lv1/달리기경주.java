@@ -1,10 +1,6 @@
 package programmers.lv1;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * 문제 설명
@@ -20,28 +16,58 @@ public class 달리기경주 {
 
     public static void main(String[] args) {
         String[] players = new String[]{"mumu", "soe", "poe", "kai", "mine"};
-        List<String> playerList = new LinkedList<String>(Arrays.asList(players));
+        String[] callings = new String[]{"kai", "kai", "mine", "mine"};
+
+        String[] solution = solution(players, callings);
+
+        for (String s : solution) {
+            System.out.println(s);
+        }
 
 
     }
 
-    public String[] solution(String[] players, String[] callings) {
+    public static String[] solution(String[] players, String[] callings) {
 
+        Map<String, Integer> keyNameMap = new HashMap<>();
+        Map<Integer, String> keyRankMap = new HashMap<>();
 
-        for (String s : callings) {
-            for(int i=0; i<players.length; ++i) {
-
-                if (s.equals(players[i])) {
-                    String temp = players[i];
-                    players[i] = players[i-1];
-                    players[i-1] = temp;
-                }
-
-
-            }
+        for(int i=0; i< players.length; ++i) {
+            keyNameMap.put(players[i], i);
+            keyRankMap.put(i, players[i]);
         }
 
-        return players;
+        for(int i=0; i<callings.length; ++i) {
+
+            //추월한 선수
+            String winner = callings[i];
+            int winnerCurrentRank = keyNameMap.get(winner);
+
+            //뒤쳐진 선수
+            String loser = keyRankMap.get(winnerCurrentRank-1);
+
+            //keyNameMap 갱신
+            keyNameMap.put(winner, winnerCurrentRank-1);
+            keyNameMap.put(loser, winnerCurrentRank);
+
+            //keyRankMap 갱신
+            keyRankMap.put(winnerCurrentRank, loser);
+            keyRankMap.put(winnerCurrentRank-1, winner);
+
+        }
+
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(keyNameMap.entrySet());
+
+        Collections.sort(list, (i1, i2) -> i1.getValue().compareTo(i2.getValue()));
+        String[] result = new String[players.length];
+
+        for(int i=0; i<list.size(); ++i) {
+            result[i] = list.get(i).getKey();
+        }
+
+        return result;
+
+
     }
 
 }
