@@ -9,24 +9,11 @@ public class 팰린드롬 {
 
         String answer = "YES";
 
-        char[] arr = str.toUpperCase().toCharArray();
-        int lt = 0, rt = arr.length-1;
+        str = str.replaceAll("[^A-Z]", "");
 
-        while (lt < rt) {
-            if (!Character.isAlphabetic(arr[lt])) lt++;
-            else if (!Character.isAlphabetic(arr[rt])) rt--;
-            else {
-                if (arr[lt] != arr[rt]) {
-                    answer = "NO";
-                    break;
-                } else {
-                    lt++;
-                    rt--;
-                }
-            }
+        String temp = new StringBuilder(str).reverse().toString();
 
-
-        }
+        if (!answer.equals(temp)) answer = "NO";
 
         return answer;
 
