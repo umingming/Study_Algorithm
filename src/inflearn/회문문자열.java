@@ -2,7 +2,7 @@ package inflearn;
 
 import java.util.Scanner;
 
-public class 화문문자열 {
+public class 회문문자열 {
 
     public String solution (String str) {
 
@@ -28,7 +28,7 @@ public class 화문문자열 {
 
 
     public static void main (String[] args) {
-        화문문자열 T = new 화문문자열();
+        회문문자열 T = new 회문문자열();
         Scanner kb = new Scanner(System.in);
         String str = kb.next();
         System.out.print(T.solution(str));
