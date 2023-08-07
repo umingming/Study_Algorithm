@@ -1,4 +1,4 @@
-package inflearn;
+package inflearn.문자열;
 
 public class 문자거리 {
 

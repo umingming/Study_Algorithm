@@ -1,4 +1,4 @@
-package inflearn;
+package inflearn.문자열;
 
 import java.util.Scanner;
 

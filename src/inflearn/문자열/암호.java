@@ -1,16 +1,19 @@
-package inflearn;
+package inflearn.문자열;
 
 import java.util.Scanner;
 
-//연습장
-public class 중복문자뒤집기 {
+public class 암호 {
 
     public String solution (String str) {
 
         String answer = "";
 
-        for(int i=0; i<str.length(); ++i) {
-            if (i == str.indexOf(str.charAt(i))) answer += str.charAt(i);
+        str = str.replace("#", "1").replace("*", "0");
+
+        for(int i=0; i<str.length()/7; ++i) {
+
+            String temp = str.substring(i*7, (i+1)*7);
+            answer += (char)Integer.parseInt(temp, 2);
         }
 
         return answer;
@@ -20,7 +23,7 @@ public class 중복문자뒤집기 {
 
 
     public static void main (String[] args) {
-        중복문자뒤집기 T = new 중복문자뒤집기();
+        암호 T = new 암호();
         Scanner kb = new Scanner(System.in);
         String str = kb.next();
         System.out.print(T.solution(str));
