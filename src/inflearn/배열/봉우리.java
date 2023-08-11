@@ -50,6 +50,16 @@ public class 봉우리 {
             arr[i] = kb.nextLine().split(" ");
         }
 
+        for (String[] strings : arr) {
+
+            for (String string : strings) {
+                System.out.println(string);
+            }
+
+            System.out.println();
+
+        }
+
         T.solution(arr);
 
     }
