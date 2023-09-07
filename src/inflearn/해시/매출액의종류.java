@@ -1,7 +1,6 @@
 package inflearn.해시;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 현수의 아빠는 제과점을 운영합니다. 현수아빠는 현수에게 N일 동안의 매출기록을 주고 연속된 K일 동안의 매출액의 종류를
@@ -18,25 +17,42 @@ import java.util.Set;
  * 세 번째 구간은 [20, 10, 23, 17]는 매출액의 종류가 4이다.
  * 네 번째 구간은 [10, 23, 17, 10]는 매출액의 종류가 3이다.
  *
+ *       lt          rt
+ * 20 12 20 10 23 17 10
+ *
  * N일간의 매출기록과 연속구간의 길이 K가 주어지면 첫 번째 구간부터 각 구간별
  *
  * 매출액의 종류를 출력하는 프로그램을 작성하세요.
  */
 public class 매출액의종류 {
 
-    public int[] solution(int[] arr, int n) {
+    public List<Integer> solution(int[] arr, int n) {
 
-        Set<Integer> set = new HashSet<>();
-        int[] answer = new int[n];
-        for(int i=0; i<n; ++i) {
+        List<Integer> answer = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-            for(int j=i; j<i+n; ++j) {
-                set.add(arr[j]);
-            }
-            answer[i] = set.size();
-            set.clear();
+        int lt=0, rt=n-2;
 
+        for(int i=0; i<n-1; ++i) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
         }
+
+        while(rt < arr.length-1) {
+            rt++;
+            map.put(arr[rt], map.getOrDefault(arr[rt], 0) + 1);
+
+            answer.add(map.size());
+
+            if (map.get(arr[lt]) == 1) {
+                map.remove(arr[lt]);
+            } else {
+                map.put(arr[lt], map.get(arr[lt])-1);
+            }
+
+            lt++;
+        }
+
+
 
         return answer;
     }
