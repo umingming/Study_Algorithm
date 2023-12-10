@@ -6,7 +6,8 @@ public class 부분집합구하기DFS {
     public static int n;
 
     /**
-     *
+     * 1
+     * 2 3
      */
     public static void DFS(int L) {
         if (L == n+1) {
