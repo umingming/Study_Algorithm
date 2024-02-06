@@ -4,26 +4,11 @@ public class 연속된수의합 {
 
     public int[] solution(int num, int total) {
         int[] answer = new int[num];
-        int startPoint = 1;
-        int result = Integer.MAX_VALUE;
+        int check = num*(num+1) / 2;
+        int start = (total - check) / num + 1;
 
-        while (result != total) {
-            result = 0;
-            for (int i=0; i<num; ++i) {
-                result+=startPoint+i;
-            }
-
-            if (result == total) {
-                for(int i=0; i<num; ++i) {
-                    answer[i] = startPoint+i;
-                }
-            } else {
-                if (result < total) {
-                    startPoint++;
-                } else {
-                    startPoint--;
-                }
-            }
+        for(int i=0; i<num; ++i) {
+            answer[i] = start+i;
         }
 
         return answer;
