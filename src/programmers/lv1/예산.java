@@ -1,5 +1,7 @@
 package programmers.lv1;
 
+import java.util.Arrays;
+
 /**
  * S사에서는 각 부서에 필요한 물품을 지원해 주기 위해 부서별로 물품을 구매하는데 필요한 금액을 조사했습니다.
  * 그러나, 전체 예산이 정해져 있기 때문에 모든 부서의 물품을 구매해 줄 수는 없습니다.
@@ -21,6 +23,9 @@ package programmers.lv1;
  * [2,2,3,3]	10	    4
  *
  * [풀이]
+ * 1. 값의 비교가 있기 때문에 소팅한 다음 쌓아올리면 될 듯
+ *
+ * [실패한 풀이]
  * 1. 바꾸어 생각하면 문제의 핵심은 이거다 "수열의 합이 budget과 동일한 최대 수열의 길이를 구하시오"
  * 2. for문을 돌면서 들어가있는 케이스와 안들어가있는 케이스를 종합해서 최종적으로 최대 수가 몇인지를 구하면 될 것 같은데?
  *  2.1. 배열의 길이만큼 for문을 돈다.
@@ -31,19 +36,22 @@ package programmers.lv1;
  */
 public class 예산 {
 
-    public int DFS(int L, int dCount, int sum, int budget, int[] d) {
-        if (sum > budget) return 0;
-        if (L == d.length) return dCount;
-
-        int include = DFS(L+1, dCount+1, sum+d[L], budget, d);
-        int exclude = DFS(L+1, dCount, sum, budget, d);
-
-        return Math.max(include, exclude);
-    }
-
-
     public int solution(int[] d, int budget) {
-        return DFS(0, 0, 0, budget, d);
+        Arrays.sort(d);
+
+        int sum = 0;
+        int answer = 0;
+        for (int i : d) {
+            sum += i;
+            answer++;
+            if (sum == budget) {
+                return answer;
+            } else if (sum > budget) {
+                return answer-1;
+            }
+        }
+
+        return answer;
     }
 
     public static void main(String[] args) {
