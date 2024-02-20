@@ -23,6 +23,10 @@ public class 동전교환 {
             return;
         }
 
+        if (L > result) {
+            return;
+        }
+
         if (sum == returnPrice) {
             result = Math.min(result, L);
         } else {
