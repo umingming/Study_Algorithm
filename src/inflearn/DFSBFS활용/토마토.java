@@ -20,13 +20,25 @@ import java.util.Queue;
  * 0 0 1 0 -1 0
  * 0 0 -1 0 0 0
  * 0 0 0 0 -1 1
+ *
+ * 1. 익은 토마토가 있는 좌표값을 넣은 큐를 만든다
+ * 2. 익지 않은 토마토가 있는 좌표값은 넣은 큐를 만든다.
+ * 3. 날짜를 체킹하기 위한 dis 배열을 만든다.
+ *  3.1. 이때 dis 배열의 수는 토마토의 수와 동일하다.
+ * 4. BFS를 쭉쭉 돌려준다
+ *  4.1. 정수 1은 익은 토마토, 정수 0은 익지 않은 토마토, 정수 -1은 토마토가 들어있지 않은 칸을 나타낸다.
+ * 5. 익지 않은 토마토가 있는 dis 좌표값을 확인한다.
+ * 6. 값을 출력한다.
+ *  6.1. 익지 않은 토마토가 있는 좌표값의 큐가 비었으면 0 출력
+ *  6.2. 최솟값이 0이면 -1 출력 (토마토가 모두 익지는 못하는 상황이면 -1을 출력해야 한다.)
+ *  6.3. 아니면 최솟값 출력
  */
 public class 토마토 {
 
     static int[][] board;
+    static int[][] dis;
 
     static int[] dx = { 0, 0, 1, -1 };
-
     static int[] dy = { 1, -1, 0, 0 };
 
     static class Point {
@@ -40,80 +52,60 @@ public class 토마토 {
         }
     }
 
-    public static int BFS() {
-        int L = 0;
+    public static void BFS() {
+        Queue<Point> queue = new LinkedList<>();
 
-        Queue<Point> queue = new LinkedList();
-        Queue<Point> checkQueue = new LinkedList();
 
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[0].length; ++j) {
+        for(int i=0; i<board.length; ++i) {
+            for(int j=0; j<board[0].length; ++j) {
                 if (board[i][j] == 1) {
                     queue.offer(new Point(i, j));
+                    dis[i][j] = 0;
                 } else if (board[i][j] == 0) {
-                    checkQueue.offer(new Point(i, j));
+                    dis[i][j] = -1;
                 }
             }
         }
-
-        boolean resultCheck = true;
 
         while (!queue.isEmpty()) {
-
-            // 하나라도 안익은 게 있으면 안됨
-            // false로 바꿔준다?
-            // 안익은게 하나라도 있으면 안됨
-            for (Point point : checkQueue) {
-                if (board[point.x][point.y] == 0) {
-                    resultCheck = false;
-                    break;
+            Point current = queue.poll();
+            for(int i=0; i<4; ++i) {
+                int nx = current.x + dx[i];
+                int ny = current.y + dy[i];
+                if (nx >= 0 && nx < board.length && ny >= 0 && ny < board[0].length && board[nx][ny] == 0 && dis[nx][ny] == -1) {
+                    board[nx][ny] = 1;
+                    dis[nx][ny] = dis[current.x][current.y] + 1;
+                    queue.add(new Point(nx, ny));
                 }
             }
-
-            // 다 익었으면
-            if (resultCheck) {
-                return L;
-            }
-
-            int size = queue.size();
-
-            for (int i = 0; i < size; ++i) {
-                Point poll = queue.poll();
-
-                for(int j=0; j<4; ++j) {
-                    int nx = poll.x + dx[j];
-                    int ny = poll.y + dy[j];
-
-                    if (nx >= 0 && nx < board[0].length && ny >= 0 && ny < board.length && board[ny][nx] != -1) {
-                        board[ny][nx] = 1;
-                        queue.add(new Point(nx, ny));
-                    }
-
-                }
-
-            }
-
-            L++;
-            resultCheck = true;
-
-            if (L > 30) {
-                return -1;
-            }
-
         }
-
-        return L;
 
     }
 
     public static void main(String[] args) {
         board = new int[][] {
-                { 0, 0, -1, 0, 0, 0, }
+                  { 0, 0, -1, 0, 0, 0, }
                 , { 0, 0, 1, 0, -1, 0 }
                 , { 0, 0, -1, 0, 0, 0 }
                 , { 0, 0, 0, 0, -1, 1 }
         };
-        System.out.println(BFS());
+
+        dis = new int[board.length][board[0].length];
+
+        BFS();
+
+        int maxDays = 0;
+        for (int[] row : dis) {
+            for (int day : row) {
+                if (day == -1) {
+                    System.out.println(-1);
+                    return;
+                }
+                maxDays = Math.max(maxDays, day);
+            }
+        }
+
+        System.out.println(maxDays);
 
 
     }
