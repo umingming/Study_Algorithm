@@ -35,9 +35,9 @@ public class 좌표정렬2 {
         @Override
         public int compareTo(Point o) {
             if (this.x == o.x) {
-                return o.y - this.y;
+                return this.y - o.y;
             } else {
-                return o.x - this.x;
+                return this.x - o.x;
             }
         }
     }
