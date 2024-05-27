@@ -1,8 +1,5 @@
 package inflearn.DFSBFS활용;
 
-
-import inflearn.재귀함수트리그래프.DFS;
-
 /**
  * [설명]
  *
@@ -30,7 +27,7 @@ import inflearn.재귀함수트리그래프.DFS;
  * 6 3
  * 7 4
  */
-public class 최대점수구하기 {
+public class 최대점수구하기DFS {
 
     // 풀 수 있는 문제의 개수
     static int n = 5;
