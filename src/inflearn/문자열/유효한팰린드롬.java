@@ -3,7 +3,7 @@ package inflearn.문자열;
 import java.util.Scanner;
 
 //연습장
-public class 팰린드롬 {
+public class 유효한팰린드롬 {
 
     public String solution (String str) {
 
@@ -22,7 +22,7 @@ public class 팰린드롬 {
 
 
     public static void main (String[] args) {
-        팰린드롬 T = new 팰린드롬();
+        유효한팰린드롬 T = new 유효한팰린드롬();
         Scanner kb = new Scanner(System.in);
         String str = kb.next();
         System.out.print(T.solution(str));
