@@ -61,8 +61,8 @@ public class 호텔대실 {
         for(String[] list : book_time) {
             int inTime = (Integer.parseInt(list[0].split(":")[0]) * 60) + Integer.parseInt(list[0].split(":")[1]);
             int outTime = (Integer.parseInt(list[1].split(":")[0]) * 60) + (Integer.parseInt(list[1].split(":")[1]) + 10);
-            bookTimeInfoList.add(new BookTimeInfo(inTime), "I");
-            bookTimeInfoList.add(new BookTimeInfo(outTime), "O");
+            bookTimeInfoList.add(new BookTimeInfo(inTime, "I"));
+            bookTimeInfoList.add(new BookTimeInfo(outTime, "O"));
         }
     }
 }
