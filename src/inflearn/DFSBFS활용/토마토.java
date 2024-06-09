@@ -55,7 +55,6 @@ public class 토마토 {
     public static void BFS() {
         Queue<Point> queue = new LinkedList<>();
 
-
         for(int i=0; i<board.length; ++i) {
             for(int j=0; j<board[0].length; ++j) {
                 if (board[i][j] == 1) {
