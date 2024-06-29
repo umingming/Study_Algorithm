@@ -53,7 +53,7 @@ public class 다익스트라알고리즘2 {
             edgeList.add(new ArrayList<>());
         }
 
-        dis = new int[edgeCount+1];
+        dis = new int[7];
         Arrays.fill(dis, Integer.MAX_VALUE);
 
         for(int[] edge : edgeInfo) {
