@@ -46,3 +46,7 @@ FISH_TYPE	FISH_NAME
 FISH_COUNT
 7
  */
+SELECT COUNT(1) AS fish_count
+FROM fish_info            fi
+INNER JOIN fish_name_info fni ON fi.fish_type = fni.fish_type
+WHERE fni.fish_name IN ('BASS', 'SNAPPER')
