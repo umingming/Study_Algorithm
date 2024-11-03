@@ -1,4 +1,4 @@
-package inflearn.문자열;
+package inflearn.문자열.특정문자뒤집기;
 
 import java.util.Scanner;
 
