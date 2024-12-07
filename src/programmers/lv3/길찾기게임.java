@@ -1,5 +1,9 @@
 package programmers.lv3;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * 문제 설명
  * 길 찾기 게임
@@ -49,15 +53,147 @@ package programmers.lv3;
  * 입출력 예
  * nodeinfo	result
  * [[5,3],[11,5],[13,3],[3,5],[6,1],[1,3],[8,6],[7,2],[2,2]]	[[7,4,6,9,1,8,5,2,3],[9,6,5,8,1,4,3,2,7]]
- * 입출력 예 설명
- * 입출력 예 #1
+ *
  *
  * 문제에 주어진 예시와 같다.
+ *
+ * [풀이]
+ * 1. nodeInfo 정보를 Node화 하여 NodeList에 담는다.
+ * 2. Node를 정렬한다. 이때 정렬 순서는 y 좌표 오름차순, x 좌표 오름차순이다.
+ * 3. 이진 트리화 한다. (for문 순회)
+ *  3.1. parentIndex가 없으면 root
+ *  3.2. parentIndex가 있으면 돈다.
+ *
+ *
+ *
+ *
  */
 
 public class 길찾기게임 {
 
+    static class Node implements Comparable<Node> {
+
+        public Node(int x, int y, int value) {
+            this.x = x;
+            this.y = y;
+            this.value = value;
+        }
+
+        int x;
+
+        int y;
+
+        int value;
+
+        Node lf;
+
+        Node rt;
+
+        // y는 내림차순, x는 오름차순
+        @Override
+        public int compareTo(Node o) {
+            if (o.y < this.y) {
+                return -11;
+            } else if (o.y == this.y) {
+                if (o.x < this.x) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } else {
+                return 1;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "x=" + x + ", y=" + y + ", value=" + value;
+        }
+    }
+
     public static void main(String[] args) {
+        길찾기게임 solution = new 길찾기게임();
+        int[][] nodeInfo = { { 5, 3 }, { 11, 5 }, { 13, 3 }, { 3, 5 }, { 6, 1 }, { 1, 3 }, { 8, 6 }, { 7, 2 }, { 2, 2 } };
+        solution.solution(nodeInfo);
+    }
+
+    public int[][] solution(int[][] nodeinfo) {
+        Node root = initNode(nodeinfo);
+
+        List<Integer> preOrderResult = preOrder(new ArrayList<Integer>(), root);
+        System.out.println(preOrderResult);
+
+        List<Integer> postOrderResult = postOrder(new ArrayList<Integer>(), root);
+        System.out.println(postOrderResult);
+
+        int[][] answer = new int[2][];
+
+        answer[0] = preOrderResult.stream()
+                                  .mapToInt(e -> e)
+                                  .toArray();
+
+        answer[1] = postOrderResult.stream()
+                                   .mapToInt(e -> e)
+                                   .toArray();
+
+        return answer;
+    }
+
+    private Node initNode(int[][] nodeinfo) {
+        List<Node> nodeList = new ArrayList<>();
+        for (int i = 0; i < nodeinfo.length; i++) {
+            nodeList.add(new Node(nodeinfo[i][0], nodeinfo[i][1], i + 1));
+        }
+
+        nodeList = nodeList.stream()
+                           .sorted()
+                           .collect(Collectors.toList());
+
+        Node root = nodeList.get(0);
+
+        for (int i = 1; i < nodeList.size(); i++) {
+            insertNode(root, nodeList.get(i));
+        }
+
+        return root;
 
     }
+
+    // 재귀적으로 매번 풀스캔 때령ㅈ
+    private void insertNode(Node parent, Node child) {
+        if (child.x < parent.x) {
+            if (parent.lf == null) {
+                parent.lf = child;
+            } else {
+                insertNode(parent.lf, child);
+            }
+        } else {
+            if (parent.rt == null) {
+                parent.rt = child;
+            } else {
+                insertNode(parent.rt, child);
+            }
+        }
+    }
+
+    private List<Integer> preOrder(List<Integer> result, Node node) {
+        if (node != null) {
+            result.add(node.value);
+            preOrder(result, node.lf);
+            preOrder(result, node.rt);
+        }
+
+        return result;
+    }
+
+    private List<Integer> postOrder(List<Integer> result, Node node) {
+        if (node != null) {
+            postOrder(result, node.lf);
+            postOrder(result, node.rt);
+            result.add(node.value);
+        }
+
+        return result;
+    }
+
 }
