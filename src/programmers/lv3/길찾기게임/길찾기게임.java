@@ -1,5 +1,4 @@
-package programmers.lv3;
-
+package programmers.lv3.길찾기게임;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
