@@ -32,24 +32,48 @@ import java.util.Arrays;
 public class ThreeSumClosest2 {
 
     public static void main(String[] args) {
-
+        ThreeSumClosest2 solution = new ThreeSumClosest2();
+        System.out.println(solution.threeSumClosest(new int[]{4,0,5,-5,3,3,0,-4,-5}, -2));
     }
 
     public int threeSumClosest(int[] nums, int target) {
-
         Arrays.sort(nums);
         int closestNum = nums[0] + nums[1] + nums[2];
 
         for(int i=0; i<nums.length-2; ++i) {
-
             int left = i+1;
             int right = right = nums.length-1;
 
             while(left < right) {
 
-            }
+                int closestDiff = getDiffNum(closestNum, target);
 
+                int currentNum = nums[i] + nums[left] + nums[right];
+                int currentDiff = getDiffNum(currentNum, target);
+
+                if (isClose(closestDiff, currentDiff)) {
+                    closestNum = currentNum;
+                }
+
+                if (currentNum > target) {
+                    left++;
+                } else if (currentNum < target) {
+                    right--;
+                } else {
+                    return closestNum;
+                }
+            }
         }
+
+        return closestNum;
+    }
+
+    private int getDiffNum(int source, int target) {
+        return Math.abs(source - target);
+    }
+
+    private boolean isClose(int prev, int current) {
+        return prev > current;
     }
 
 }
