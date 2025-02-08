@@ -1,7 +1,4 @@
-package leetcode;
-
-import java.util.HashSet;
-import java.util.Set;
+package leetcode.longestcommonprefix;
 
 /**
  * 14. Longest Common Prefix
