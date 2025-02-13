@@ -1,4 +1,4 @@
-package findtheIndexofthefirstoccurrenceinastring;
+package leetcode.findtheIndexofthefirstoccurrenceinastring;
 
 public class FindTheIndexOfTheFirstOccurrenceInAString {
 
