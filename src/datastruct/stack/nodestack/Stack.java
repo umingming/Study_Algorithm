@@ -11,6 +11,7 @@ public class Stack<T> {
             this.data = data;
         }
     }
+    
     private Node<T> top;
 
     public T pop() {
